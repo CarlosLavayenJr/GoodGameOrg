@@ -1,6 +1,6 @@
 const express = require('express');
-const { createLeague, getLeagues, updateLeague, deleteLeague } = require('../controllers/leagueController');
-const authMiddleware = require('../middleware/authMiddleware');
+const { createLeague, getLeagues, updateLeague, deleteLeague } = require('../../controllers/leagueController');
+const authMiddleware = require('../../middleware/authMiddleware');
 const router = express.Router();
 
 router.post('/leagues', authMiddleware, createLeague);
