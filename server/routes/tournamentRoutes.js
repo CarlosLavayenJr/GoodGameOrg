@@ -1,6 +1,6 @@
 const express = require('express');
-const { createTournament, getTournaments, updateTournament, deleteTournament } = require('../controllers/tournamentController');
-const authMiddleware = require('../middleware/authMiddleware');
+const { createTournament, getTournaments, updateTournament, deleteTournament } = require('../../controllers/tournamentController');
+const authMiddleware = require('../../middleware/authMiddleware');
 const router = express.Router();
 
 router.post('/tournaments', authMiddleware, createTournament);
