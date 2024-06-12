@@ -7,6 +7,7 @@ const FooterContainer = styled.footer`
   background-color: #333;
   color: white;
   text-align: center;
+  width: 100vw;
 `;
 
 const SocialLink = styled.a`
