@@ -1,5 +1,7 @@
 # GoodGameOrg
 
+<img src="./assets/Logo.png" width="230" height="200">
+
 [![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com)
 [![Visual Studio](https://badgen.net/badge/icon/visualstudio?icon=visualstudio&label)](https://visualstudio.microsoft.com)
 
