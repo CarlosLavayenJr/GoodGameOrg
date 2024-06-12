@@ -1,6 +1,6 @@
-const League = require('../server/models/League');
-const Match = require('../server/models/Match');
-const Team = require('../server/models/Team');
+const League = require('../models/League');
+const Match = require('../models/Match');
+const Team = require('../models/Team');
 
 const createLeague = async (req, res) => {
     const league = new League(req.body);
