@@ -32,6 +32,8 @@ const login = async (req, res) => {
     if (!username || !password) {
         return res.status(400).json({message: 'Both Username and Password must be filled in!'})
     }
+    
+    try {
     //Finding the user
     const user = await User.findOne({ username });
     if (!user || !await bcrypt.compare(password, user.password)) {
@@ -39,6 +41,10 @@ const login = async (req, res) => {
     }
     const token = jwt.sign({ userId: user._id }, 'secretkey');
     res.json({ token });
+    } catch(error) {
+        res.status(500).json({message: 'Internal Server Error!', error: error.message})
+    }
+
 };
 
 module.exports = { register, login };
