@@ -5,6 +5,12 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
+    username: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: true
+    },
     firstName: {
       type: String,
       required: true,
@@ -25,9 +31,9 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
-      minlength: 5,
+      minlength: 6,
     },
-    orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
+    
   },
   { timestamps: true }
 );
