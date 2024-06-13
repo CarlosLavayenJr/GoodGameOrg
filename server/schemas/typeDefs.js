@@ -28,6 +28,16 @@ const typeDefs = `
     matches: [Match]
   }
 
+  type Tournament {
+    _id: ID!
+    name: String!
+    startDate: String!
+    endDate: String!
+    location: String
+    teams: [Team]!
+    matches: [Match]
+  }
+
   type User {
     _id: ID
     firstName: String
@@ -55,6 +65,10 @@ const typeDefs = `
     user: User
   }
 
+  type Checkout {
+    session: ID
+  }
+
   type Query {
     categories: [Category]
     leagues(category: ID, name: String, location: String): [League]
@@ -64,6 +78,9 @@ const typeDefs = `
     user: User
     matches(teamId: ID, leagueId: ID): [Match] # Filter by team or league
     match(_id: ID!): Match
+    tournaments(name: String, location: String): [Tournament]
+    tournament(_id: ID!): Tournament
+    checkout(leagueId: ID!): Checkout
   }
 
   type Mutation {
@@ -77,6 +94,9 @@ const typeDefs = `
     createMatch(team1: ID!, team2: ID!, date: String!, time: String!, location: String, league: ID): Match
     updateMatch(_id: ID!, team1Score: Int, team2Score: Int, winner: ID): Match
     deleteMatch(_id: ID!): Match
+    createTournament(name: String!, startDate: String!, endDate: String!, location: String): Tournament
+    updateTournament(_id: ID!, name: String, startDate: String, endDate: String, location: String): Tournament
+    deleteTournament(_id: ID!): Tournament
     login(email: String!, password: String!): Auth
   }
 `;
