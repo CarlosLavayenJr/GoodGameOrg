@@ -4,20 +4,28 @@ const typeDefs = `
     name: String
   }
 
-  type Product {
-    _id: ID
-    name: String
+  type Team {
+    _id: ID!
+    name: String!
     description: String
-    image: String
-    quantity: Int
-    price: Float
-    category: Category
+    image: String # URL for image
+    captain: User # Reference to the team captain (User type)
+    record: [Int] # Array of [wins, losses]
+    users: [User]!
+    league: League # Reference to the league the team belongs to
+    matches: [Match]
   }
 
-  type Order {
-    _id: ID
-    purchaseDate: String
-    products: [Product]
+  type League {
+    _id: ID!
+    name: String!
+    location: String
+    category: Category!
+    startDate: String
+    endDate: String
+    format: String  # e.g., "round robin," "tournament"
+    teams: [Team]!
+    matches: [Match]
   }
 
   type User {
@@ -25,11 +33,21 @@ const typeDefs = `
     firstName: String
     lastName: String
     email: String
-    orders: [Order]
+    teams: [Team]
+    matches: [Match]
+    leagues: [League]
   }
 
-  type Checkout {
-    session: ID
+  type Match {
+    _id: ID!
+    team1: Team!
+    team2: Team!
+    team1Score: Int
+    team2Score: Int
+    winner: Team
+    date: String!
+    time: String!
+    location: String
   }
 
   type Auth {
@@ -39,18 +57,26 @@ const typeDefs = `
 
   type Query {
     categories: [Category]
-    products(category: ID, name: String): [Product]
-    product(_id: ID!): Product
+    leagues(category: ID, name: String, location: String): [League]
+    league(_id: ID!): League
+    teams(category: ID, name: String, leagueId: ID): [Team] # Filter by league
+    team(_id: ID!): Team
     user: User
-    order(_id: ID!): Order
-    checkout(products: [ID]!): Checkout
+    matches(teamId: ID, leagueId: ID): [Match] # Filter by team or league
+    match(_id: ID!): Match
   }
 
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    addOrder(products: [ID]!): Order
+    addTeam(team: [ID]!): Team
     updateUser(firstName: String, lastName: String, email: String, password: String): User
-    updateProduct(_id: ID!, quantity: Int!): Product
+    updateTeam(_id: ID!): Team
+    createLeague(name: String!, location: String, category: ID!, startDate: String, endDate: String, format: String): League
+    updateLeague(_id: ID!, name: String, location: String, category: ID, startDate: String, endDate: String, format: String): League
+    deleteLeague(_id: ID!): League
+    createMatch(team1: ID!, team2: ID!, date: String!, time: String!, location: String, league: ID): Match
+    updateMatch(_id: ID!, team1Score: Int, team2Score: Int, winner: ID): Match
+    deleteMatch(_id: ID!): Match
     login(email: String!, password: String!): Auth
   }
 `;
