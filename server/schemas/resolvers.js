@@ -7,87 +7,78 @@ const resolvers = {
     categories: async () => {
       return await Category.find();
     },
-    products: async (parent, { category, name }) => {
+
+    leagues: async (parent, { category, name, location }) => {
       const params = {};
-
-      if (category) {
-        params.category = category;
-      }
-
-      if (name) {
-        params.name = {
-          $regex: name
-        };
-      }
-
-      return await Product.find(params).populate('category');
+      if (category) params.category = category;
+      if (name) params.name = { $regex: name };
+      if (location) params.location = { $regex: location };
+      return await League.find(params).populate('category').populate('teams');
     },
-    product: async (parent, { _id }) => {
-      return await Product.findById(_id).populate('category');
+
+    league: async (parent, { _id }) => {
+      return await League.findById(_id).populate('category').populate('teams');
     },
-    user: async (parent, args, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category'
-        });
 
-        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
+    teams: async (parent, { category, name, leagueId }) => {
+      const params = {};
+      if (category) params.category = category;
+      if (name) params.name = { $regex: name };
+      if (leagueId) params.league = leagueId; 
+      return await Team.find(params).populate('users').populate('league'); 
+    },
 
-        return user;
+    team: async (parent, { _id }) => {
+      return await Team.findById(_id).populate('users').populate('league');
+    },
+
+    // ... (user resolver remains mostly the same)
+
+    matches: async (parent, { teamId, leagueId }) => {
+      const params = {};
+      if (teamId) {
+        params.$or = [{ team1: teamId }, { team2: teamId }];
       }
-
-      throw AuthenticationError;
+      if (leagueId) params.league = leagueId;
+      return await Match.find(params).populate('team1').populate('team2');
     },
-    order: async (parent, { _id }, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category'
-        });
 
-        return user.orders.id(_id);
-      }
-
-      throw AuthenticationError;
+    match: async (parent, { _id }) => {
+      return await Match.findById(_id).populate('team1').populate('team2');
     },
-    checkout: async (parent, args, context) => {
+
+    checkout: async (parent, { leagueId }, context) => {
       const url = new URL(context.headers.referer).origin;
-      const order = new Order({ products: args.products });
-      const line_items = [];
+      const league = await League.findById(leagueId);
 
-      const { products } = await order.populate('products');
-
-      for (let i = 0; i < products.length; i++) {
-        const product = await stripe.products.create({
-          name: products[i].name,
-          description: products[i].description,
-          images: [`${url}/images/${products[i].image}`]
-        });
-
-        const price = await stripe.prices.create({
-          product: product.id,
-          unit_amount: products[i].price * 100,
-          currency: 'usd',
-        });
-
-        line_items.push({
-          price: price.id,
-          quantity: 1
-        });
+      if (!league) {
+        throw new Error("League not found");
       }
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
-        line_items,
+        line_items: [
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: `Registration for ${league.name}`,
+                description: league.description
+              },
+              unit_amount: league.registrationFee * 100, // Assuming you have a registrationFee field in League model
+            },
+            quantity: 1,
+          },
+        ],
         mode: 'payment',
         success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${url}/`
+        cancel_url: `${url}`,
       });
 
       return { session: session.id };
     }
   },
+
   Mutation: {
     addUser: async (parent, args) => {
       const user = await User.create(args);
@@ -95,17 +86,7 @@ const resolvers = {
 
       return { token, user };
     },
-    addOrder: async (parent, { products }, context) => {
-      if (context.user) {
-        const order = new Order({ products });
 
-        await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
-
-        return order;
-      }
-
-      throw AuthenticationError;
-    },
     updateUser: async (parent, args, context) => {
       if (context.user) {
         return await User.findByIdAndUpdate(context.user._id, args, { new: true });
@@ -113,11 +94,7 @@ const resolvers = {
 
       throw AuthenticationError;
     },
-    updateProduct: async (parent, { _id, quantity }) => {
-      const decrement = Math.abs(quantity) * -1;
 
-      return await Product.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
-    },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -134,6 +111,41 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
+    },
+
+    addTeam: async (parent, { name, description, image, captain, league }, context) => {
+      // ... (your logic to create a team)
+  },
+
+    updateTeam: async (parent, { _id, ...args }, context) => {
+      if (context.user) {
+        return await Team.findByIdAndUpdate(_id, args, { new: true });
+      }
+      throw AuthenticationError;
+    },
+
+    createLeague: async (parent, args, context) => {
+        // ... (your logic to create a league)
+    },
+
+    updateLeague: async (parent, { _id, ...args }, context) => {
+        // ... (your logic to update a league)
+    },
+
+    deleteLeague: async (parent, { _id }, context) => {
+        // ... (your logic to delete a league)
+    },
+
+    createMatch: async (parent, args, context) => {
+        // ... (your logic to create a match)
+    },
+
+    updateMatch: async (parent, { _id, ...args }, context) => {
+        // ... (your logic to update a match)
+    },
+
+    deleteMatch: async (parent, { _id }, context) => {
+        // ... (your logic to delete a match)
     }
   }
 };
