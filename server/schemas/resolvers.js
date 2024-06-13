@@ -1,4 +1,4 @@
-const { User, Product, Category, Order } = require('../models');
+const { User, League, Match, Team, Tournament, Category } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
@@ -11,8 +11,8 @@ const resolvers = {
     leagues: async (parent, { category, name, location }) => {
       const params = {};
       if (category) params.category = category;
-      if (name) params.name = { $regex: name };
-      if (location) params.location = { $regex: location };
+      if (name) params.name = { $regex: name, $options: 'i' }; // added case-insensitive option
+      if (location) params.location = { $regex: location, $options: 'i' }; // added case-insensitive option
       return await League.find(params).populate('category').populate('teams');
     },
 
@@ -23,7 +23,7 @@ const resolvers = {
     teams: async (parent, { category, name, leagueId }) => {
       const params = {};
       if (category) params.category = category;
-      if (name) params.name = { $regex: name };
+      if (name) params.name = { $regex: name, $options: 'i' }; // added case-insensitive option
       if (leagueId) params.league = leagueId; 
       return await Team.find(params).populate('users').populate('league'); 
     },
@@ -31,8 +31,6 @@ const resolvers = {
     team: async (parent, { _id }) => {
       return await Team.findById(_id).populate('users').populate('league');
     },
-
-    // ... (user resolver remains mostly the same)
 
     matches: async (parent, { teamId, leagueId }) => {
       const params = {};
@@ -76,7 +74,18 @@ const resolvers = {
       });
 
       return { session: session.id };
-    }
+    },
+
+    tournaments: async (parent, { name, location }) => {
+      const params = {};
+      if (name) params.name = { $regex: name, $options: 'i' }; // added case-insensitive option
+      if (location) params.location = { $regex: location, $options: 'i' }; // added case-insensitive option
+      return await Tournament.find(params).populate('teams').populate('matches');
+    },
+
+    tournament: async (parent, { _id }) => {
+      return await Tournament.findById(_id).populate('teams').populate('matches');
+    },
   },
 
   Mutation: {
@@ -92,20 +101,20 @@ const resolvers = {
         return await User.findByIdAndUpdate(context.user._id, args, { new: true });
       }
 
-      throw AuthenticationError;
+      throw new AuthenticationError('Not authenticated');
     },
 
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw AuthenticationError;
+        throw new AuthenticationError('Incorrect credentials');
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw AuthenticationError;
+        throw new AuthenticationError('Incorrect credentials');
       }
 
       const token = signToken(user);
@@ -114,40 +123,88 @@ const resolvers = {
     },
 
     addTeam: async (parent, { name, description, image, captain, league }, context) => {
-      // ... (your logic to create a team)
-  },
+      if (context.user) {
+        const team = await Team.create({ name, description, image, captain, league });
+        await League.findByIdAndUpdate(league, { $push: { teams: team._id } });
+        return team;
+      }
+      throw new AuthenticationError('Not authenticated');
+    },
 
     updateTeam: async (parent, { _id, ...args }, context) => {
       if (context.user) {
         return await Team.findByIdAndUpdate(_id, args, { new: true });
       }
-      throw AuthenticationError;
+      throw new AuthenticationError('Not authenticated');
     },
 
     createLeague: async (parent, args, context) => {
-        // ... (your logic to create a league)
+      if (context.user) {
+        const league = await League.create(args);
+        return league;
+      }
+      throw new AuthenticationError('Not authenticated');
     },
 
     updateLeague: async (parent, { _id, ...args }, context) => {
-        // ... (your logic to update a league)
+      if (context.user) {
+        return await League.findByIdAndUpdate(_id, args, { new: true });
+      }
+      throw new AuthenticationError('Not authenticated');
     },
 
     deleteLeague: async (parent, { _id }, context) => {
-        // ... (your logic to delete a league)
+      if (context.user) {
+        return await League.findByIdAndDelete(_id);
+      }
+      throw new AuthenticationError('Not authenticated');
     },
 
     createMatch: async (parent, args, context) => {
-        // ... (your logic to create a match)
+      if (context.user) {
+        const match = await Match.create(args);
+        await League.findByIdAndUpdate(args.league, { $push: { matches: match._id } });
+        return match;
+      }
+      throw new AuthenticationError('Not authenticated');
     },
 
     updateMatch: async (parent, { _id, ...args }, context) => {
-        // ... (your logic to update a match)
+      if (context.user) {
+        return await Match.findByIdAndUpdate(_id, args, { new: true });
+      }
+      throw new AuthenticationError('Not authenticated');
     },
 
     deleteMatch: async (parent, { _id }, context) => {
-        // ... (your logic to delete a match)
-    }
-  }
+      if (context.user) {
+        return await Match.findByIdAndDelete(_id);
+      }
+      throw new AuthenticationError('Not authenticated');
+    },
+
+    createTournament: async (parent, args, context) => {
+      if (context.user) {
+        const tournament = await Tournament.create(args);
+        return tournament;
+      }
+      throw new AuthenticationError('Not authenticated');
+    },
+
+    updateTournament: async (parent, { _id, ...args }, context) => {
+      if (context.user) {
+        return await Tournament.findByIdAndUpdate(_id, args, { new: true });
+      }
+      throw new AuthenticationError('Not authenticated');
+    },
+
+    deleteTournament: async (parent, { _id }, context) => {
+      if (context.user) {
+        return await Tournament.findByIdAndDelete(_id);
+      }
+      throw new AuthenticationError('Not authenticated');
+    },
+  },
 };
 
 module.exports = resolvers;
