@@ -11,12 +11,17 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-mongoose.connect('mongodb://localhost:27017/GoodGameOrg', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/GoodGameOrg');
+const dbConnection = mongoose.connection;
+
+// mongoose.connect('mongodb://localhost:27017/GoodGameOrg', { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(authRoutes);
 app.use(tournamentRoutes);
 app.use(leagueRoutes);
 
-app.listen(3000, () => {
-    console.log('Server running on port 3000');
+dbConnection.once('open', () => {
+    app.listen(3000, () => {
+        console.log('Server running on port 3000');
+    });
 });
