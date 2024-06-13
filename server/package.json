@@ -2,24 +2,26 @@
     "name": "goodgame",
     "version": "1.0.0",
     "description": "",
-    "main": "server/server.js",
+    "main": "server.js",
     "scripts": {
-        "start": "node server/server.js",
-        "dev": "nodemon server.js",
-        "seed": "node run seed"
+      "start": "node server.js",
+      "watch": "nodemon",
+      "seed": "node config/seeds.js"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "bcryptjs": "^2.4.3",
-        "body-parser": "^1.20.2",
-        "cors": "^2.8.5",
-        "express": "^4.19.2",
-        "jsonwebtoken": "^9.0.2",
-        "mongoose": "^8.4.1"
+      "@apollo/server": "^4.7.2",
+      "bcrypt": "^4.0.1",
+      "express": "^4.17.2",
+      "graphql": "^16.6.0",
+      "jsonwebtoken": "^8.5.1",
+      "mongoose": "^8.0.0",
+      "stripe": "^8.67.0"
     },
     "devDependencies": {
-        "nodemon": "^3.1.3"
+      "nodemon": "^2.0.2"
     }
-}
+  }
+  
