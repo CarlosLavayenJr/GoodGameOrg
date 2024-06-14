@@ -14,14 +14,9 @@ function App() {
     <div>
          <Navbar />
          <DrawerComponent />
+         <Footer />
    </div>
 
-  );
-
-  return(
-    <div>
-  <Footer></Footer>
-  </div>
   );
 };
 
