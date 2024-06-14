@@ -6,6 +6,8 @@ import viteLogo from '/vite.svg'
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import DrawerComponent from './components/DrawerComp';
+import LeaguesPage from "./pages/LeaguesPage";
+import {Outlet} from "react-router-dom"
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,6 +16,7 @@ function App() {
     <div>
          <Navbar />
          <DrawerComponent />
+         <Outlet />
          <Footer />
    </div>
 

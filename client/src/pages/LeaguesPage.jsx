@@ -1,6 +1,6 @@
 import React from 'react';
 import LeagueList from '../components/LeagueList';
-import CreateLeague from '../components/CreateLeague';
+import CreateLeague from './CreateLeague';
 
 const LeaguesPage = () => {
     return (
