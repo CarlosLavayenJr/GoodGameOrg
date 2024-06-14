@@ -174,8 +174,24 @@ const resolvers = {
 
     createMatch: async (parent, args, context) => {
       if (context.user) {
-        const match = await Match.create({tournament, league, team1, team2, date, location,}   
-        );
+        const { tournament, league, team1, team2, date, location } = args;
+    
+        const matchData = {
+          team1,
+          team2,
+          date,
+          location,
+        };
+    
+        if (tournament) {
+          matchData.tournament = tournament;
+        } else if (league) {
+          matchData.league = league;
+        } else {
+          throw new Error('Either tournament or league must be provided');
+        }
+    
+        const match = await Match.create(matchData);
     
         if (tournament) {
           await Tournament.findByIdAndUpdate(tournament, { $push: { matches: match._id } });

@@ -78,7 +78,7 @@ type MatchResult {
     categories: [Category]
     leagues(category: ID, name: String, location: String): [League]
     league(_id: ID!): League
-    teams(category: ID, name: String, leagueId: ID): [Team] # Filter by league
+    teams(league: ID, tournament: ID): [Team]
     team(_id: ID!): Team
     user: User
     matches(teamId: ID, leagueId: ID): [Match] # Filter by team or league
