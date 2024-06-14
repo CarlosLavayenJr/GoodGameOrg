@@ -11,7 +11,7 @@ import {
   Box,
 } from "@mui/material";
 import DrawerComp from "./DrawerComp";
-
+import {Link} from "react-router-dom"
 const PAGES = ["Tournament", "League"];
 
 const Navbar = () => {
