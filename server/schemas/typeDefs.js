@@ -52,17 +52,19 @@ const typeDefs = `
   }
 
   type Match {
-    _id: ID!
-    team1: Team!
-    team2: Team!
-    team1Score: Int
-    team2Score: Int
-    winner: Team
-    date: String!
-    time: String!
-    location: String
-  }
+  _id: ID!
+  tournament: Tournament
+  league: League
+  team1: Team!
+  team2: Team!
+  date: String!
+  result: MatchResult
+}
 
+type MatchResult {
+  team1Score: Int
+  team2Score: Int
+}
   type Auth {
     token: ID
     user: User
@@ -94,7 +96,7 @@ const typeDefs = `
     createLeague(name: String!, location: String, category: ID!, startDate: String, endDate: String, format: String): League
     updateLeague(_id: ID!, name: String, location: String, category: ID, startDate: String, endDate: String, format: String): League
     deleteLeague(_id: ID!): League
-    createMatch(team1: ID!, team2: ID!, date: String!, time: String!, location: String, league: ID): Match
+    createMatch(tournament: ID, league: ID, team1: ID!, team2: ID!, date: String!, location: String,): Match
     updateMatch(_id: ID!, team1Score: Int, team2Score: Int, winner: ID): Match
     deleteMatch(_id: ID!): Match
     createTournament(name: String!, category: ID!, startDate: String!, endDate: String!, location: String): Tournament

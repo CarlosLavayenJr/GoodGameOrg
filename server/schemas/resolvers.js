@@ -174,15 +174,15 @@ const resolvers = {
 
     createMatch: async (parent, args, context) => {
       if (context.user) {
-        // Check if a match with the same team1, team2, and league already exists
-        const { team1, team2, league } = args;
-        const existingMatch = await Match.findOne({ team1, team2, league });
-        if (existingMatch) {
-          throw new Error('Match with these teams and league already exists');
+        const match = await Match.create({tournament, league, team1, team2, date, location,}   
+        );
+    
+        if (tournament) {
+          await Tournament.findByIdAndUpdate(tournament, { $push: { matches: match._id } });
+        } else if (league) {
+          await League.findByIdAndUpdate(league, { $push: { matches: match._id } });
         }
     
-        const match = await Match.create(args);
-        await League.findByIdAndUpdate(args.league, { $push: { matches: match._id } });
         return match;
       }
       throw AuthenticationError;
