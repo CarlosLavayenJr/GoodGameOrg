@@ -47,9 +47,11 @@ const Navbar = () => {
                 <Button sx={{ marginRight: "10px" }} variant="contained" color="secondary">
                   Login
                 </Button>
-                <Button variant="contained" color="secondary">
+                <Button sx={{ marginRight: "10px" }} variant="contained" color="secondary">
                   Sign Up
                 </Button>
+                <a href="https://buy.stripe.com/test_3cs5m1fAX7hF8P6144" style={{ textDecoration: 'none' }}> <Button sx={{ marginRight: "10px" }} variant="contained" color="secondary"> Subscribe
+                </Button> </a>
               </Box>
             </>
           )}

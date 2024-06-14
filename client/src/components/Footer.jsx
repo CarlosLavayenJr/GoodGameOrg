@@ -33,9 +33,6 @@ function Footer() {
         <footer className="footer">
           <p>Made with ❤️️</p>
             <p>&copy; 2024 Copy Pasta Purists</p>
-            <a href="https://buy.stripe.com/test_3cs5m1fAX7hF8P6144">
-              <button>Subscribe</button>
-            </a>
           </footer>
     </FooterContainer>
   );
