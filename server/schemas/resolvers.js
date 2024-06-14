@@ -204,6 +204,27 @@ const resolvers = {
       }
       throw new AuthenticationError('Not authenticated');
     },
+    addCategory: async (parent, args, context) => {
+      if (context.user) {
+        const newCategory = await Category.create(args);
+        return newCategory;
+      }
+      throw new AuthenticationError('Not authenticated');
+    },
+
+    updateCategory: async (parent, { _id, ...args }, context) => {
+      if (context.user) {
+        return await Category.findByIdAndUpdate(_id, args, { new: true });
+      }
+      throw new AuthenticationError('Not authenticated');
+    },
+
+    deleteCategory: async (parent, { _id }, context) => {
+      if (context.user) {
+        return await Category.findByIdAndDelete(_id);
+      }
+      throw new AuthenticationError('Not authenticated');
+    },
   },
 };
 

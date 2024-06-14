@@ -2,6 +2,7 @@ const typeDefs = `
   type Category {
     _id: ID
     name: String
+    description: String
   }
 
   type Team {
@@ -97,6 +98,9 @@ const typeDefs = `
     createTournament(name: String!, startDate: String!, endDate: String!, location: String): Tournament
     updateTournament(_id: ID!, name: String, startDate: String, endDate: String, location: String): Tournament
     deleteTournament(_id: ID!): Tournament
+    addCategory(name: String!, description: String): Category
+    updateCategory(_id: ID!, name: String, description: String): Category
+    deleteCategory(_id: ID!): Category
     login(email: String!, password: String!): Auth
   }
 `;
