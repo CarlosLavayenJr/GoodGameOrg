@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 
-const PAGES = ["Tournament", "League", "Login", "Logout"];
+const PAGES = ["Tournament", "League", "Login", "Logout", "Subscribe",];
 
 const DrawerComp = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
