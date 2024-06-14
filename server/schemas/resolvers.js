@@ -80,11 +80,11 @@ const resolvers = {
       const params = {};
       if (name) params.name = { $regex: name, $options: 'i' }; // added case-insensitive option
       if (location) params.location = { $regex: location, $options: 'i' }; // added case-insensitive option
-      return await Tournament.find(params).populate('teams').populate('matches');
+      return await Tournament.find(params).populate('category').populate('teams').populate('matches');
     },
 
     tournament: async (parent, { _id }) => {
-      return await Tournament.findById(_id).populate('teams').populate('matches');
+      return await Tournament.findById(_id).populate('category').populate('teams').populate('matches');
     },
   },
 
@@ -101,20 +101,20 @@ const resolvers = {
         return await User.findByIdAndUpdate(context.user._id, args, { new: true });
       }
 
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
 
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError('Incorrect credentials');
+        throw AuthenticationError;
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError('Incorrect credentials');
+        throw AuthenticationError;
       }
 
       const token = signToken(user);
@@ -124,106 +124,156 @@ const resolvers = {
 
     addTeam: async (parent, { name, description, image, captain, league }, context) => {
       if (context.user) {
+        // Check if a team with the same name and league already exists
+        const existingTeam = await Team.findOne({ name, league });
+        if (existingTeam) {
+          throw new Error('Team with this name and league already exists');
+        }
+    
         const team = await Team.create({ name, description, image, captain, league });
         await League.findByIdAndUpdate(league, { $push: { teams: team._id } });
         return team;
       }
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
 
     updateTeam: async (parent, { _id, ...args }, context) => {
       if (context.user) {
         return await Team.findByIdAndUpdate(_id, args, { new: true });
       }
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
 
-    createLeague: async (parent, args, context) => {
+    createLeague: async (parent, { name, location, category, startDate, endDate, format }, context) => {
       if (context.user) {
-        const league = await League.create(args);
+        // Check if a league with the same name and location already exists
+        const existingLeague = await League.findOne({ name, location });
+        if (existingLeague) {
+          throw new Error('League with this name and location already exists');
+        }
+    
+        const league = await League.create({ name, location, category, startDate, endDate, format });
         return league;
       }
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
 
-    updateLeague: async (parent, { _id, ...args }, context) => {
+    updateLeague: async (parent, { _id, name, location, category, startDate, endDate, format }, context) => {
       if (context.user) {
-        return await League.findByIdAndUpdate(_id, args, { new: true });
+        return await League.findByIdAndUpdate(_id, { name, location, category, startDate, endDate, format }, { new: true });
       }
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
 
     deleteLeague: async (parent, { _id }, context) => {
       if (context.user) {
         return await League.findByIdAndDelete(_id);
       }
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
 
     createMatch: async (parent, args, context) => {
       if (context.user) {
-        const match = await Match.create(args);
-        await League.findByIdAndUpdate(args.league, { $push: { matches: match._id } });
+        const { tournament, league, team1, team2, date, location } = args;
+    
+        const matchData = {
+          team1,
+          team2,
+          date,
+          location,
+        };
+    
+        if (tournament) {
+          matchData.tournament = tournament;
+        } else if (league) {
+          matchData.league = league;
+        } else {
+          throw new Error('Either tournament or league must be provided');
+        }
+    
+        const match = await Match.create(matchData);
+    
+        if (tournament) {
+          await Tournament.findByIdAndUpdate(tournament, { $push: { matches: match._id } });
+        } else if (league) {
+          await League.findByIdAndUpdate(league, { $push: { matches: match._id } });
+        }
+    
         return match;
       }
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
+    
 
     updateMatch: async (parent, { _id, ...args }, context) => {
       if (context.user) {
         return await Match.findByIdAndUpdate(_id, args, { new: true });
       }
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
 
     deleteMatch: async (parent, { _id }, context) => {
       if (context.user) {
         return await Match.findByIdAndDelete(_id);
       }
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
 
-    createTournament: async (parent, args, context) => {
+    createTournament: async (parent, { name, category, startDate, endDate, location }, context) => {
       if (context.user) {
-        const tournament = await Tournament.create(args);
+        // Check if a tournament with the same name and location already exists
+        const existingTournament = await Tournament.findOne({ name, location });
+        if (existingTournament) {
+          throw new Error('Tournament with this name and location already exists');
+        }
+    
+        const tournament = await Tournament.create({ name, category, startDate, endDate, location });
         return tournament;
       }
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
 
-    updateTournament: async (parent, { _id, ...args }, context) => {
+    updateTournament: async (parent, { _id, name, category, startDate, endDate, location }, context) => {
       if (context.user) {
-        return await Tournament.findByIdAndUpdate(_id, args, { new: true });
+        return await Tournament.findByIdAndUpdate(_id, { name, category, startDate, endDate, location }, { new: true });
       }
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
 
     deleteTournament: async (parent, { _id }, context) => {
       if (context.user) {
         return await Tournament.findByIdAndDelete(_id);
       }
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
     addCategory: async (parent, args, context) => {
       if (context.user) {
+        const { name } = args;
+    
+        // Check if the category name already exists
+        const existingCategory = await Category.findOne({ name });
+        if (existingCategory) {
+          throw new Error('Category with this name already exists');
+        }
+    
         const newCategory = await Category.create(args);
         return newCategory;
       }
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
 
     updateCategory: async (parent, { _id, ...args }, context) => {
       if (context.user) {
         return await Category.findByIdAndUpdate(_id, args, { new: true });
       }
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
 
     deleteCategory: async (parent, { _id }, context) => {
       if (context.user) {
         return await Category.findByIdAndDelete(_id);
       }
-      throw new AuthenticationError('Not authenticated');
+      throw AuthenticationError;
     },
   },
 };
