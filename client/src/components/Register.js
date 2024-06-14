@@ -4,14 +4,26 @@ import axiosInstance from '../axiosInstance';
 const Register = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [setError] = useState(null);
+    const [confirmPass] = useState('');
 
     const handleRegister = async (e) => {
         e.preventDefault();
+
+        //Confirming the password is entered correctly
+        if (password !== confirmPass) {
+            setError('Password does not match!');
+            return;
+        }
+        setError(null);
+
         try {
             await axiosInstance.post('/register', { username, password });
             alert('User registered successfully');
         } catch (error) {
-            console.error('Registration error', error);
+            //Gives error message in console and to user
+            console.error('Registration Error!', error);
+            return res.status(400).json({message: 'Registration Error!'});
         }
     };
 
