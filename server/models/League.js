@@ -6,6 +6,7 @@ const leagueSchema = new Schema(
   {
     name: { type: String, required: true, unique: true },
     description: { type: String, default: '' },
+    category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
     teams: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
     matches: [{ type: Schema.Types.ObjectId, ref: 'Match' }],
     standings: [

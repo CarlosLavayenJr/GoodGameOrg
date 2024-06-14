@@ -32,6 +32,7 @@ const typeDefs = `
   type Tournament {
     _id: ID!
     name: String!
+    category: Category!
     startDate: String!
     endDate: String!
     location: String
@@ -95,8 +96,8 @@ const typeDefs = `
     createMatch(team1: ID!, team2: ID!, date: String!, time: String!, location: String, league: ID): Match
     updateMatch(_id: ID!, team1Score: Int, team2Score: Int, winner: ID): Match
     deleteMatch(_id: ID!): Match
-    createTournament(name: String!, startDate: String!, endDate: String!, location: String): Tournament
-    updateTournament(_id: ID!, name: String, startDate: String, endDate: String, location: String): Tournament
+    createTournament(name: String!, category: ID!, startDate: String!, endDate: String!, location: String): Tournament
+    updateTournament(_id: ID!, name: String, category: ID!, startDate: String, endDate: String, location: String): Tournament
     deleteTournament(_id: ID!): Tournament
     addCategory(name: String!, description: String): Category
     updateCategory(_id: ID!, name: String, description: String): Category

@@ -6,6 +6,7 @@ const tournamentSchema = new Schema(
   {
     name: { type: String, required: true, unique: true },
     description: { type: String, default: '' },
+    category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     teams: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
