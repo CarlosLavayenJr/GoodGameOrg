@@ -6,16 +6,17 @@ const typeDefs = `
   }
 
   type Team {
-    _id: ID!
-    name: String!
-    description: String
-    image: String # URL for image
-    captain: User # Reference to the team captain (User type)
-    record: [Int] # Array of [wins, losses]
-    users: [User]!
-    league: League # Reference to the league the team belongs to
-    matches: [Match]
-  }
+  _id: ID!
+  name: String!
+  description: String
+  image: String # URL for image
+  captain: User # Reference to the team captain (User type)
+  record: [Int] # Array of [wins, losses]
+  users: [User]!
+  league: League # Reference to the league the team belongs to
+  tournament: Tournament # Reference to the tournament the team belongs to
+  matches: [Match]
+}
 
   type League {
     _id: ID!
@@ -32,6 +33,7 @@ const typeDefs = `
   type Tournament {
     _id: ID!
     name: String!
+    category: Category!
     startDate: String!
     endDate: String!
     location: String
@@ -50,17 +52,19 @@ const typeDefs = `
   }
 
   type Match {
-    _id: ID!
-    team1: Team!
-    team2: Team!
-    team1Score: Int
-    team2Score: Int
-    winner: Team
-    date: String!
-    time: String!
-    location: String
-  }
+  _id: ID!
+  tournament: Tournament
+  league: League
+  team1: Team!
+  team2: Team!
+  date: String!
+  result: MatchResult
+}
 
+type MatchResult {
+  team1Score: Int
+  team2Score: Int
+}
   type Auth {
     token: ID
     user: User
@@ -74,7 +78,7 @@ const typeDefs = `
     categories: [Category]
     leagues(category: ID, name: String, location: String): [League]
     league(_id: ID!): League
-    teams(category: ID, name: String, leagueId: ID): [Team] # Filter by league
+    teams(league: ID, tournament: ID): [Team]
     team(_id: ID!): Team
     user: User
     matches(teamId: ID, leagueId: ID): [Match] # Filter by team or league
@@ -86,17 +90,17 @@ const typeDefs = `
 
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    addTeam(team: [ID]!): Team
+    addTeam(name: String!, description: String, image: String, captain: ID, league: ID!, tournament: ID): Team
     updateUser(firstName: String, lastName: String, email: String, password: String): User
-    updateTeam(_id: ID!): Team
+    updateTeam(_id: ID!, name: String, description: String, image: String, captain: ID, league: ID, tournament: ID): Team
     createLeague(name: String!, location: String, category: ID!, startDate: String, endDate: String, format: String): League
     updateLeague(_id: ID!, name: String, location: String, category: ID, startDate: String, endDate: String, format: String): League
     deleteLeague(_id: ID!): League
-    createMatch(team1: ID!, team2: ID!, date: String!, time: String!, location: String, league: ID): Match
+    createMatch(tournament: ID, league: ID, team1: ID!, team2: ID!, date: String!, location: String,): Match
     updateMatch(_id: ID!, team1Score: Int, team2Score: Int, winner: ID): Match
     deleteMatch(_id: ID!): Match
-    createTournament(name: String!, startDate: String!, endDate: String!, location: String): Tournament
-    updateTournament(_id: ID!, name: String, startDate: String, endDate: String, location: String): Tournament
+    createTournament(name: String!, category: ID!, startDate: String!, endDate: String!, location: String): Tournament
+    updateTournament(_id: ID!, name: String, category: ID!, startDate: String, endDate: String, location: String): Tournament
     deleteTournament(_id: ID!): Tournament
     addCategory(name: String!, description: String): Category
     updateCategory(_id: ID!, name: String, description: String): Category
