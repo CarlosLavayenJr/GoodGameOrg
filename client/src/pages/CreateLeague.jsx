@@ -23,7 +23,7 @@ const CreateLeague = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='AddaLeague'>
             <div>
                 <label>
                     League Name:

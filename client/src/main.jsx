@@ -22,8 +22,8 @@ const router = createBrowserRouter([
       },
       
       // {
-      //   path: '/CreateBracket',
-      //   element: <CreateBracket />,
+      //   path: '/Tournament',
+      //   element: <CreateTournament />,
       // },
     ],
   },
