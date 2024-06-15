@@ -4,7 +4,7 @@ import { FaGithub } from 'react-icons/fa';
 
 const FooterContainer = styled.footer`
   padding: 0px;
-  background-color: #333;
+  background-color: transparent;
   color: white;
   text-align: center;
   width: 100vw;
@@ -31,8 +31,7 @@ function Footer() {
         <FaGithub />
       </SocialLink>
         <footer className="footer">
-          <p>Made with ❤️️</p>
-            <p>&copy; 2024 Copy Pasta Purists</p>
+          <p>Made with ❤️️ &copy; 2024 Copy Pasta Purists</p>
           </footer>
     </FooterContainer>
   );
