@@ -9,14 +9,18 @@ import {
 } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 
-const PAGES = ["Tournament", "League", "Login", "Logout", "Subscribe",];
+const PAGES = ["Tournament", "League", "Login", "Logout", "Subscribe"];
 
 const DrawerComp = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
   return (
     <React.Fragment>
-      <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
+      <Drawer
+        anchor="right" // Set anchor to right
+        open={openDrawer}
+        onClose={() => setOpenDrawer(false)}
+      >
         <List>
           {PAGES.map((page, index) => (
             <ListItemButton key={index} onClick={() => setOpenDrawer(false)}>
