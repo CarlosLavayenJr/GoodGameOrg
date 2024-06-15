@@ -5,7 +5,6 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,6 +12,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+<<<<<<< Updated upstream
 a {
   font-weight: 500;
   color: #ffffff;
@@ -22,12 +22,27 @@ a:hover {
   color: #caccfa;
 }
 
+=======
+>>>>>>> Stashed changes
 body {
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-image: url('/public/assets/Background.jpg');
+  background-size: cover; /* Ensures the background covers the whole screen */
+  background-position: center; /* Centers the background image */
+  background-repeat: no-repeat; /* Prevents the background image from repeating */
+}
+
+a {
+  font-weight: 500;
+  color: white;
+  text-decoration: inherit;
+}
+a:hover {
+  color: white;
 }
 
 h1 {
@@ -47,7 +62,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: white;
 }
 button:focus,
 button:focus-visible {
