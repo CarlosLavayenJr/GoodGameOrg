@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import {
   AppBar,
   Button,
-  Tab,
-  Tabs,
   Toolbar,
   Typography,
   useMediaQuery,
   useTheme,
   Box,
-  ButtonGroup,
 } from "@mui/material";
 import DrawerComp from "./DrawerComp";
 import { Link } from "react-router-dom";
@@ -23,10 +20,10 @@ const Navbar = () => {
     <React.Fragment>
       <AppBar sx={{ background: "#063970" }}>
         <Toolbar>
-        <Link to="/">
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            GOODGAMEORG
-          </Typography>
+          <Link to="/">
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              GOODGAMEORG
+            </Typography>
           </Link>
           {isMatch ? (
             <DrawerComp />
@@ -40,14 +37,14 @@ const Navbar = () => {
                   variant="contained"
                   color="secondary"
                 >
-                  <Link to="/Tournament"> Add a Tournament</Link>{" "}
+                  <Link to="/Tournament">Tournaments</Link>{" "}
                 </Button>
                 <Button
                   sx={{ marginRight: "10px" }}
                   variant="contained"
                   color="secondary"
                 >
-                  <Link to="/CreateLeague"> Add a League</Link>{" "}
+                  <Link to="/CreateLeague">Leagues</Link>{" "}
                 </Button>
               </Box>
               <Box

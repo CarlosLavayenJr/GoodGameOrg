@@ -12,7 +12,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-<<<<<<< Updated upstream
 a {
   font-weight: 500;
   color: #ffffff;
@@ -22,17 +21,14 @@ a:hover {
   color: #caccfa;
 }
 
-=======
->>>>>>> Stashed changes
 body {
   margin: 0;
   display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
   background-image: url('/public/assets/Background.jpg');
   background-size: cover; /* Ensures the background covers the whole screen */
-  background-position: center; /* Centers the background image */
+  background-position: static; /* Centers the background image */
   background-repeat: no-repeat; /* Prevents the background image from repeating */
 }
 
@@ -48,6 +44,7 @@ a:hover {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  padding-top: 100px;
 }
 
 button {
