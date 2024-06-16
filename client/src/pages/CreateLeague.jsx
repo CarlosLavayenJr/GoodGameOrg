@@ -23,6 +23,7 @@ const CreateLeague = () => {
     };
 
     return (
+        <div>
         <form onSubmit={handleSubmit} className='AddaLeague'>
             <div>
                 <label>
@@ -57,7 +58,10 @@ const CreateLeague = () => {
                     />
                 </label>
             </div>
-            <div>
+            <button type="submit">Create League</button>
+        </form>
+
+        <div class="AddTeams">
                 <label>Teams:</label>
                 {teams.map((team, index) => (
                     <div key={index}>
@@ -71,8 +75,13 @@ const CreateLeague = () => {
                 ))}
                 <button type="button" onClick={addTeam}>Add Team</button>
             </div>
-            <button type="submit">Create League</button>
-        </form>
+
+            <div class="TournamentsBox">
+                <label class="TournTitle">Tournaments:</label>
+                <p>Placeholder lorem ipsum</p>
+            </div>
+
+        </div>
     );
 };
 
