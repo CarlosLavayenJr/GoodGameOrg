@@ -26,7 +26,7 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
-  background-image: url('/public/assets/Background.jpg');
+  background-image: url('/assets/Background.jpg');
   background-size: cover; /* Ensures the background covers the whole screen */
   background-position: static; /* Centers the background image */
   background-repeat: no-repeat; /* Prevents the background image from repeating */

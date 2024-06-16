@@ -15,5 +15,9 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.0"
+  },
+  "dependencies": {
+    "brackets-json-db": "^1.0.2",
+    "brackets-manager": "^1.6.4"
   }
 }

@@ -37,13 +37,6 @@ const Navbar = () => {
                   variant="contained"
                   color="secondary"
                 >
-                  <Link to="/Tournament">Tournaments</Link>{" "}
-                </Button>
-                <Button
-                  sx={{ marginRight: "10px" }}
-                  variant="contained"
-                  color="secondary"
-                >
                   <Link to="/CreateLeague">Leagues</Link>{" "}
                 </Button>
               </Box>
@@ -59,14 +52,14 @@ const Navbar = () => {
                   variant="contained"
                   color="secondary"
                 >
-                  <Link to=""> Login</Link>{" "}
+                  <Link to="">Login</Link>{" "}
                 </Button>
                 <Button
                   sx={{ marginRight: "10px" }}
                   variant="contained"
                   color="secondary"
                 >
-                  <Link to=""> Register</Link>{" "}
+                  <Link to="">Register</Link>{" "}
                 </Button>
                 <Button
                   sx={{ marginRight: "10px" }}
@@ -78,7 +71,7 @@ const Navbar = () => {
                     href="https://buy.stripe.com/test_3cs5m1fAX7hF8P6144"
                     style={{ textDecoration: "none" }}
                   >
-                    Subscribe{" "}
+                    DONATE{" "}
                   </a>
                 </Button>
               </Box>
