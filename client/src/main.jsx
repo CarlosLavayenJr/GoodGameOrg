@@ -4,6 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import CreateLeague from "./pages/CreateLeague.jsx"
+import CreateTournament from "./pages/CreateTournament.jsx";
 import HomePage from "./pages/HomePage.jsx"
 // import CreateBracket from "./pages/"
 
@@ -21,14 +22,13 @@ const router = createBrowserRouter([
         element: <CreateLeague />,
       },
       
-      // {
-      //   path: '/Tournament',
-      //   element: <CreateTournament />,
-      // },
+       {
+         path: '/Tournament',
+         element: <CreateTournament />,
+       },
     ],
   },
 ]);
-
 
 
 // Render the RouterProvider component
