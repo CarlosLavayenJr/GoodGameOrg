@@ -15,7 +15,7 @@ export default function CreateTournament() {
   };
 
   return (
-    <Container>
+    <Container class="TournamentsBox">
       <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         <TextField
           label="Tournament Name"
@@ -23,6 +23,17 @@ export default function CreateTournament() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          
+          InputProps={{
+            style: {
+              color: 'white', 
+            },
+          }}
+          InputLabelProps={{
+            style: {
+              color: 'white', 
+            },
+          }}
         />
         <TextField
           label="Game"
@@ -30,6 +41,17 @@ export default function CreateTournament() {
           value={game}
           onChange={(e) => setGame(e.target.value)}
           required
+
+          InputProps={{
+            style: {
+              color: 'white', 
+            },
+          }}
+          InputLabelProps={{
+            style: {
+              color: 'white', 
+            },
+          }}
         />
         <TextField
           label="Participants"
@@ -38,6 +60,17 @@ export default function CreateTournament() {
           onChange={(e) => setParticipants(e.target.value)}
           placeholder="Enter participant names or number of participants"
           required
+
+          InputProps={{
+            style: {
+              color: 'white',
+            },
+          }}
+          InputLabelProps={{
+            style: {
+              color: 'white', 
+            },
+          }}
         />
         <Button type="submit" variant="contained" color="primary">
           Create Tournament
