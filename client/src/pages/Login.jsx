@@ -30,7 +30,7 @@ function Login(props) {
   };
 
   return (
-    <div className="container my-1" class="login">
+    <div className="container my-1 login">
       <Link to="/Register">← Register Here</Link>
 
       <h2>Login</h2>
@@ -45,7 +45,7 @@ function Login(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="flex-row space-between my-2" class="passadjust">
+        <div className="flex-row space-between my-2 passadjust">
           <label htmlFor="pwd">Password: </label>
           <input
             placeholder="******"
