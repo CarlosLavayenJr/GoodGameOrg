@@ -15,7 +15,7 @@ export default function CreateTournament() {
   };
 
   return (
-    <Container class="TournamentsBox">
+    <Container className="TournamentsBox">
       <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         <TextField
           label="Tournament Name"

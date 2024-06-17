@@ -61,7 +61,7 @@ const CreateLeague = () => {
             <button type="submit">Create League</button>
         </form>
 
-        <div class="AddTeams">
+        <div className="AddTeams">
                 <label>Teams:</label>
                 {teams.map((team, index) => (
                     <div key={index}>
@@ -76,8 +76,8 @@ const CreateLeague = () => {
                 <button type="button" onClick={addTeam}>Add Team</button>
             </div>
 
-            <div class="TournamentsBox">
-                <label class="TournTitle">Leagues:</label>
+            <div className="TournamentsBox">
+                <label className="TournTitle">Leagues:</label>
                 <p></p>
             </div>
 
