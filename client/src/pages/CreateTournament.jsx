@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Container, TextField, Button, Box } from '@mui/material';
+import '../App.css'; // Correct path to your CSS file
 
 export default function CreateTournament() {
   const [name, setName] = useState('');
@@ -16,13 +17,18 @@ export default function CreateTournament() {
 
   return (
     <Container>
-      <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <Box component="form" onSubmit={handleSubmit} className="TournamentsBox">
         <TextField
           label="Tournament Name"
-          variant="outlined"     //Text field with an outline
+          variant="outlined"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          InputLabelProps={{ style: { fontWeight: 'bold' } }}
+          InputProps={{
+            style: { fontWeight: 'bold', backgroundColor: 'white' },
+          }}
+          className="TextFieldBold"
         />
         <TextField
           label="Game"
@@ -30,6 +36,11 @@ export default function CreateTournament() {
           value={game}
           onChange={(e) => setGame(e.target.value)}
           required
+          InputLabelProps={{ style: { fontWeight: 'bold' } }}
+          InputProps={{
+            style: { fontWeight: 'bold', backgroundColor: 'white' },
+          }}
+          className="TextFieldBold"
         />
         <TextField
           label="Participants"
@@ -38,6 +49,11 @@ export default function CreateTournament() {
           onChange={(e) => setParticipants(e.target.value)}
           placeholder="Enter participant names or number of participants"
           required
+          InputLabelProps={{ style: { fontWeight: 'bold' } }}
+          InputProps={{
+            style: { fontWeight: 'bold', backgroundColor: 'white' },
+          }}
+          className="TextFieldBold"
         />
         <Button type="submit" variant="contained" color="primary">
           Create Tournament
