@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import CreateLeague from "./pages/CreateLeague.jsx"
 import CreateTournament from "./pages/CreateTournament.jsx";
 import HomePage from "./pages/HomePage.jsx"
+import Login from "./pages/Login.jsx"
 // import CreateBracket from "./pages/"
 
 const router = createBrowserRouter([
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
+        path: '/Login',
+        element: <Login />
+      },
+      {
         path: '/CreateLeague',
         element: <CreateLeague />,
       },
@@ -26,6 +31,7 @@ const router = createBrowserRouter([
          path: '/Tournament',
          element: <CreateTournament />,
        },
+       
     ],
   },
 ]);
