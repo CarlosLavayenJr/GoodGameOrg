@@ -7,6 +7,7 @@ import CreateLeague from "./pages/CreateLeague.jsx"
 import CreateTournament from "./pages/CreateTournament.jsx";
 import HomePage from "./pages/HomePage.jsx"
 import Login from "./pages/Login.jsx"
+import Register from "./pages/Register.jsx"
 // import CreateBracket from "./pages/"
 
 const router = createBrowserRouter([
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: '/Login',
         element: <Login />
+      },
+      {
+        path: '/Register',
+        element: <Register />
       },
       {
         path: '/CreateLeague',

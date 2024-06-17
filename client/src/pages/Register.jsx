@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
-import { SIGNUP } from '../utils/mutations';
+import { ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 function Signup(props) {
   const [formState, setFormState] = useState({ email: '', password: '', username: '' });
-  const [signup, { error }] = useMutation(SIGNUP);
+  const [signup, { error }] = useMutation(ADD_USER);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -36,12 +36,22 @@ function Signup(props) {
       <h2>Signup</h2>
       <form onSubmit={handleFormSubmit}>
         <div className="flex-row space-between my-2">
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="firstName">First Name:</label>
           <input
-            placeholder="yourusername"
-            name="username"
+            placeholder="First"
+            name="firstName"
             type="text"
-            id="username"
+            id="firstName"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex-row space-between my-2">
+          <label htmlFor="lastName">Last Name:</label>
+          <input
+            placeholder="Last"
+            name="lastName"
+            type="text"
+            id="lastName"
             onChange={handleChange}
           />
         </div>

@@ -66,7 +66,7 @@ const Navbar = () => {
                   variant="contained"
                   color="secondary"
                 >
-                  <Link to=""> Register</Link>{" "}
+                  <Link to="/Register"> Register</Link>{" "}
                 </Button>
                 <Button
                   sx={{ marginRight: "10px" }}
