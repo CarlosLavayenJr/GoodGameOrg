@@ -30,13 +30,13 @@ function Signup(props) {
   };
 
   return (
-    <div className="container my-1">
+    <div className="container my-1" class="register">
       <Link to="/login">← Go to Login</Link>
 
       <h2>Signup</h2>
       <form onSubmit={handleFormSubmit}>
         <div className="flex-row space-between my-2">
-          <label htmlFor="firstName">First Name:</label>
+          <label htmlFor="firstName">First Name: </label>
           <input
             placeholder="First"
             name="firstName"
@@ -46,7 +46,7 @@ function Signup(props) {
           />
         </div>
         <div className="flex-row space-between my-2">
-          <label htmlFor="lastName">Last Name:</label>
+          <label htmlFor="lastName">Last Name: </label>
           <input
             placeholder="Last"
             name="lastName"
@@ -55,8 +55,8 @@ function Signup(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email address:</label>
+        <div className="flex-row space-between my-2" class="emailadjust">
+          <label htmlFor="email">Email address: </label>
           <input
             placeholder="youremail@test.com"
             name="email"
@@ -65,8 +65,8 @@ function Signup(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
+        <div className="flex-row space-between my-2" class="passadjust2">
+          <label htmlFor="pwd">Password: </label>
           <input
             placeholder="******"
             name="password"

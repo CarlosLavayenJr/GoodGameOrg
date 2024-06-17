@@ -107,3 +107,25 @@ border-color: rgb(133, 98, 197);
 .passadjust{
   margin-left: 33px;
 }
+
+.register{
+  color: white;
+  background-color: rgb(54, 54, 105);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(133, 98, 197);
+  position: center;
+  line-height: 32px;
+    margin-top: 190px;
+    height: 280px;
+    width: 320px;
+    padding: 10px;
+}
+
+.emailadjust{
+  margin-right: 22px;
+}
+.passadjust2{
+  margin-left: 8px;
+}
