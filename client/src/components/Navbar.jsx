@@ -10,11 +10,16 @@ import {
 } from "@mui/material";
 import DrawerComp from "./DrawerComp";
 import { Link } from "react-router-dom";
+import Auth from "../utils/auth";
 
 const Navbar = () => {
   const [value, setValue] = useState();
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
+
+  const handleLogout = () => {
+    Auth.logout();
+  };
 
   return (
     <React.Fragment>
@@ -67,6 +72,14 @@ const Navbar = () => {
                   color="secondary"
                 >
                   <Link to="/Register"> Register</Link>{" "}
+                </Button>
+                <Button
+                  sx={{ marginRight: "10px" }}
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleLogout}
+                >
+                  Logout
                 </Button>
                 <Button
                   sx={{ marginRight: "10px" }}
