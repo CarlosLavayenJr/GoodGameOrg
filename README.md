@@ -28,6 +28,7 @@ Render, MongoDB, Express, React, Node.js
 
 ## Table of Contents
 
+- [The Pitch Deck](#the-pitch-deck)
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
@@ -35,19 +36,23 @@ Render, MongoDB, Express, React, Node.js
 - [Tests](#tests)
 - [Email](#email)
 
+## The Pitch Deck
+
+https://docs.google.com/presentation/d/1I5IExYU17qJeflocTsEQlk9NhEB4-7LV88tZKKXK1uE/edit?usp=sharing
+
 ## Installation
 
-[![Render](https://img.shields.io/badge/Render-46E3B7.svg?style=for-the-badge&logo=Render&logoColor=white)](https://render.com)
+[![Render](https://img.shields.io/badge/Render-46E3B7.svg?style=for-the-badge&logo=Render&logoColor=white)](https://goodgameorg.onrender.com/)
 
 - Render Deployment Link:
 
+https://goodgameorg.onrender.com/
+
 ## Usage
 
-[![GitHub](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com)
+[![GitHub](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com/CarlosLavayenJr/GoodGameOrg)
 
 https://github.com/CarlosLavayenJr/GoodGameOrg
-
-<video src="./Assets/Sequence_2.MP4" controls></video>
 
 ## License
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
