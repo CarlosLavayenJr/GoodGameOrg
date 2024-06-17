@@ -77,8 +77,8 @@ const CreateLeague = () => {
             </div>
 
             <div class="TournamentsBox">
-                <label class="TournTitle">Tournaments:</label>
-                <p>Placeholder lorem ipsum</p>
+                <label class="TournTitle">Leagues:</label>
+                <p></p>
             </div>
 
         </div>
