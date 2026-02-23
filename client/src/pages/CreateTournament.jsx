@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Container, TextField, Button, Box } from '@mui/material';
+import CategoryDropdown from '../components/CategoryDropdown';
 
 export default function CreateTournament() {
   const [name, setName] = useState('');
   const [game, setGame] = useState('');
   const [participants, setParticipants] = useState('');
+  const [category, setCategory] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,6 +14,7 @@ export default function CreateTournament() {
     console.log('Tournament Name:', name);
     console.log('Game:', game);
     console.log('Participants:', participants);
+    console.log('Category:', category);
   };
 
   return (
@@ -72,6 +75,7 @@ export default function CreateTournament() {
             },
           }}
         />
+        <CategoryDropdown selectedCategory={category} onCategoryChange={setCategory} />
         <Button type="submit" variant="contained" color="primary">
           Create Tournament
         </Button>

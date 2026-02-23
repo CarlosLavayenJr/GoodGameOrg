@@ -12,6 +12,25 @@ export const LOGIN = gql`
 `;
 
 
+export const ADD_CATEGORY = gql`
+  mutation AddCategory($name: String!, $description: String) {
+    addCategory(name: $name, description: $description) {
+      _id
+      name
+      description
+    }
+  }
+`;
+
+export const DELETE_CATEGORY = gql`
+  mutation DeleteCategory($_id: ID!) {
+    deleteCategory(_id: $_id) {
+      _id
+      name
+    }
+  }
+`;
+
 export const ADD_USER = gql`
   mutation addUser(
     $firstName: String!
