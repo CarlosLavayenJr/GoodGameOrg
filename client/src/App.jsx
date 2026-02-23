@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import React from 'react';
 import './App.css';
 import {
   ApolloClient,
@@ -41,6 +39,6 @@ function App() {
    </div>
    </ApolloProvider>
   );
-};
+}
 
 export default App

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   AppBar,
   Button,
@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 
 const Navbar = () => {
-  const [value, setValue] = useState();
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -59,28 +58,33 @@ const Navbar = () => {
                   alignItems: "center",
                 }}
               >
-                <Button
-                  sx={{ marginRight: "10px" }}
-                  variant="contained"
-                  color="secondary"
-                >
-                  <Link to="/Login"> Login</Link>{" "}
-                </Button>
-                <Button
-                  sx={{ marginRight: "10px" }}
-                  variant="contained"
-                  color="secondary"
-                >
-                  <Link to="/Register"> Register</Link>{" "}
-                </Button>
-                <Button
-                  sx={{ marginRight: "10px" }}
-                  variant="contained"
-                  color="secondary"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </Button>
+                {Auth.loggedIn() ? (
+                  <Button
+                    sx={{ marginRight: "10px" }}
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      sx={{ marginRight: "10px" }}
+                      variant="contained"
+                      color="secondary"
+                    >
+                      <Link to="/Login"> Login</Link>{" "}
+                    </Button>
+                    <Button
+                      sx={{ marginRight: "10px" }}
+                      variant="contained"
+                      color="secondary"
+                    >
+                      <Link to="/Register"> Register</Link>{" "}
+                    </Button>
+                  </>
+                )}
                 <Button
                   sx={{ marginRight: "10px" }}
                   variant="contained"

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import axiosInstance from '../../axios.Instance';
 
 const LeagueList = () => {
     const [leagues, setLeagues] = useState([]);

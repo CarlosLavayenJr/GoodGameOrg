@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
-function Signup(props) {
+function Signup() {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [addUser, { error }] = useMutation(ADD_USER);
 

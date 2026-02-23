@@ -5,11 +5,16 @@ const { Schema } = mongoose;
 const teamSchema = new Schema(
   {
     name: { type: String, required: true, unique: true },
-    players: [{ type: String }], // Array of player names
+    description: { type: String, default: '' },
+    image: { type: String, default: '' },
+    captain: { type: Schema.Types.ObjectId, ref: 'User' },
+    record: [{ type: Number }], // Array of [wins, losses]
+    players: [{ type: String }],
     league: { type: Schema.Types.ObjectId, ref: 'League', required: function() { return !this.tournament; } },
     tournament: { type: Schema.Types.ObjectId, ref: 'Tournament', required: function() { return !this.league; } },
-    images: [{ type: String }], // Array of image URLs
-    users: [{ type: Schema.Types.ObjectId, ref: 'User' }], // Add this line
+    images: [{ type: String }],
+    users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    matches: [{ type: Schema.Types.ObjectId, ref: 'Match' }],
   },
   { timestamps: true }
 );

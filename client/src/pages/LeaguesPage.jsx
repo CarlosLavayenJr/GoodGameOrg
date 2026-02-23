@@ -1,4 +1,3 @@
-import React from 'react';
 import LeagueList from '../components/LeagueList';
 import CreateLeague from './CreateLeague';
 

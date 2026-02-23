@@ -6,7 +6,6 @@ import {
   IconButton,
   List,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
 } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';

@@ -86,6 +86,13 @@ const resolvers = {
     tournament: async (parent, { _id }) => {
       return await Tournament.findById(_id).populate('category').populate('teams').populate('matches');
     },
+
+    user: async (parent, args, context) => {
+      if (context.user) {
+        return await User.findById(context.user._id).populate('teams').populate('matches').populate('leagues');
+      }
+      throw AuthenticationError;
+    },
   },
 
   Mutation: {

@@ -6,6 +6,10 @@ const leagueSchema = new Schema(
   {
     name: { type: String, required: true, unique: true },
     description: { type: String, default: '' },
+    location: { type: String, default: '' },
+    startDate: { type: String, default: '' },
+    endDate: { type: String, default: '' },
+    format: { type: String, default: '' },
     category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
     teams: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
     matches: [{ type: Schema.Types.ObjectId, ref: 'Match' }],
