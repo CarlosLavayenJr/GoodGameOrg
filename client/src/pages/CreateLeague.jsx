@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import CategoryDropdown from '../components/CategoryDropdown';
 
 const CreateLeague = () => {
     const [leagueName, setLeagueName] = useState('');
     const [teams, setTeams] = useState(['']);
     const [numGames, setNumGames] = useState(0);
     const [gameType, setGameType] = useState('');
+    const [category, setCategory] = useState('');
 
     const handleTeamChange = (index, event) => {
         const newTeams = [...teams];
@@ -19,7 +21,7 @@ const CreateLeague = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         // Logic to handle form submission goes here
-        console.log({ leagueName, teams, numGames, gameType });
+        console.log({ leagueName, teams, numGames, gameType, category });
     };
 
     return (
@@ -57,6 +59,9 @@ const CreateLeague = () => {
                         required
                     />
                 </label>
+            </div>
+            <div>
+                <CategoryDropdown selectedCategory={category} onCategoryChange={setCategory} />
             </div>
             <button type="submit">Create League</button>
         </form>
