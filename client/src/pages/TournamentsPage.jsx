@@ -1,4 +1,3 @@
-import React from 'react';
 import TournamentList from '../components/TournamentList';
 import CreateTournament from '../components/CreateTournament';
 
